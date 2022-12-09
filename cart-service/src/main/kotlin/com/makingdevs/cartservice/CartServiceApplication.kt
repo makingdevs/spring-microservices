@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class CartServiceApplication
 
 fun main(args: Array<String>) {
-	runApplication<CartServiceApplication>(*args)
+  runApplication<CartServiceApplication>(*args)
 }
