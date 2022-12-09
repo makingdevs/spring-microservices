@@ -24,8 +24,7 @@ class ProductServiceImpl implements ProductService {
   Product sendToCart(Long productId) {
     Optional<Product> product = productRepository.findById(productId)
     if (product.isPresent()) {
-      String jsonInString = new JsonBuilder(product.get()).toPrettyString()
-      rabbitTemplate.convertAndSend(rabbitmqQueue, jsonInString)
+      rabbitTemplate.convertAndSend(rabbitmqQueue, product.get())
       product.get()
     }
     null
