@@ -3,3 +3,8 @@ spring:
     username: root
     url: jdbc:mysql://localhost:3306/cart
     password: pass
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
