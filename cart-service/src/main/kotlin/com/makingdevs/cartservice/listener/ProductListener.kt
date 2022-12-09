@@ -11,7 +11,7 @@ class ProductListener(
   private val productService: ProductService
 ) : Logging {
 
-  @RabbitListener(queues = ["product"])
+  @RabbitListener(queues = ["\${queue.product}"])
   fun onProductRegistration(product: Product) {
     logger.info("Product registration event received (ID): ${product.id}")
     productService.saveProduct(product)
