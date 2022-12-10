@@ -1,4 +1,4 @@
-export class PageReponse<T> {
+export class PageResponse<T> {
   data: Array<T>;
   pages: number;
   total: number;

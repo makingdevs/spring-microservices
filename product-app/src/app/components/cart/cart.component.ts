@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
-import { PageReponse } from 'src/app/models/page-response';
+import { PageResponse } from 'src/app/models/page-response';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class CartComponent implements OnInit {
   private getProducts(): void {
     this.cartService
       .getProducts()
-      .subscribe((response: PageReponse<Product>) => {
+      .subscribe((response: PageResponse<Product>) => {
         this.products = response.data;
         this.pages = response.pages;
         this.total = response.total;
