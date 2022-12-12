@@ -5,19 +5,18 @@ import { Product } from '../models/product';
 
 @Injectable()
 export class ProductService {
-  url: string = 'http://localhost:8085/product';
+  url: string = 'http://localhost:8080/api/v1/products';
 
   constructor(private http: HttpClient) {}
 
   getProducts(): Observable<Product[]> {
     let url = this.url;
-    url += "/getAll"
     return this.http.get<Product[]>(url);
   }
 
   addProductToCart(productId: number): Observable<void> {
     let url = this.url;
-    url += `/sendToCart/${productId}`;
+    url += `/${productId}/carts`;
     return this.http.post<void>(url, {});
   }
 }

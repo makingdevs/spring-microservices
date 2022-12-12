@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/v1/products")
 class ProductController {
 
   @Autowired
@@ -23,23 +23,23 @@ class ProductController {
   @Autowired
   ProductService productService
 
-  @PostMapping("/addOne")
+  @PostMapping
   Product addProduct(@RequestBody Product product) {
     return productRepository.save(product)
   }
 
-  @PostMapping("/addList")
+  @PostMapping("/multiple")
   List<Product> addProductList (@RequestBody  List<Product> products) {
     println "adding list ${products}"
     return productRepository.saveAll(products)
   }
 
-  @GetMapping("/getAll")
+  @GetMapping
   List<Product> getAllProduct () {
     return productRepository.findAll()
   }
 
-  @PostMapping("/sendToCart/{productId}")
+  @PostMapping("/{productId}/carts")
   ResponseEntity<Product> sendToCart(@PathVariable Long productId) {
     Product product = productService.sendToCart(productId)
     product

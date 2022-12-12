@@ -6,7 +6,7 @@ import { PageResponse } from '../models/page-response';
 
 @Injectable()
 export class CartService {
-  url: string = 'http://localhost:8050/api/v1/carts';
+  url: string = 'http://localhost:8080/api/v1/carts';
 
   constructor(private http: HttpClient) {}
 
