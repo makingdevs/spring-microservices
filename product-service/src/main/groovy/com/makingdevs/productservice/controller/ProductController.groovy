@@ -43,8 +43,8 @@ class ProductController {
   ResponseEntity<Product> sendToCart(@PathVariable Long productId) {
     Product product = productService.sendToCart(productId)
     product
-      ? new ResponseEntity<>(product, HttpStatus.OK)
-      : new ResponseEntity<>(HttpStatus.NOT_FOUND)
+      ? new ResponseEntity<Product>(product, HttpStatus.OK)
+      : new ResponseEntity<Product>(HttpStatus.NOT_FOUND)
   }
 
 }

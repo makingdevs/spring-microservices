@@ -25,9 +25,8 @@ class ProductServiceImpl implements ProductService {
     Optional<Product> product = productRepository.findById(productId)
     if (product.isPresent()) {
       rabbitTemplate.convertAndSend(rabbitmqQueue, product.get())
-      product.get()
+      return product.get()
     }
-    null
   }
 
 }
