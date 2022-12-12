@@ -27,4 +27,10 @@ export class CartComponent implements OnInit {
         this.total = response.total;
       });
   }
+
+  onDeleteProduct(productId: number): void {
+    this.cartService
+      .deleteProduct(productId)
+      .subscribe(() => this.getProducts());
+  }
 }

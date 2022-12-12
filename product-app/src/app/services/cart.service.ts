@@ -13,8 +13,14 @@ export class CartService {
   getProducts(page?: number, size?: number): Observable<PageResponse<Product>> {
     let url = this.url;
     if (page && size) {
-      url += '?page=' + page + '&size=' + size;
+      url += `?page=${page}&size=${size}`;
     }
     return this.http.get<PageResponse<Product>>(url);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    let url = this.url;
+    url += `/${id}`;
+    return this.http.delete<void>(url);
   }
 }

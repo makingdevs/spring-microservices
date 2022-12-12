@@ -1,7 +1,7 @@
 <div>
-  <h2>Cart</h2>
+  <h2>Products</h2>
   <div *ngFor="let product of products">
     <p>{{product.name}} - ${{product.price}}</p>
-    <button (click)="onDeleteProduct(product.id)">Delete</button>
+    <button (click)="onAddProduct(product.id)">Add</button>
   <div>
 </div>

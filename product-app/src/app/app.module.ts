@@ -6,6 +6,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CartComponent } from './components/cart/cart.component';
+import { ProductComponent } from './components/product/product.component';
 import { CartService } from './services/cart.service';
 import { ProductService } from './services/product.service';
 
@@ -13,6 +14,7 @@ import { ProductService } from './services/product.service';
   declarations: [
     AppComponent,
     CartComponent,
+    ProductComponent,
   ],
   imports: [
     BrowserModule,
