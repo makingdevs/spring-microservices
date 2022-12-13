@@ -14,3 +14,9 @@ spring:
           uri: http://localhost:8050
           predicates:
             - Path=/api/v1/carts/**
+eureka:
+  instance:
+    appname: ${spring.application.name}
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka
