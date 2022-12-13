@@ -9,17 +9,17 @@ spring:
         - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
       globalcors:
         corsConfigurations:
-          '[/**]':
+          "[/**]":
             allowedOrigins: "http://localhost:4200"
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
         - id: product-service
-          uri: http://localhost:8085
+          uri: lb://PRODUCT-SERVICE
           predicates:
             - Path=/api/v1/products/**
         - id: cart-service
-          uri: http://localhost:8050
+          uri: lb://CART-SERVICE
           predicates:
             - Path=/api/v1/carts/**
 eureka:
