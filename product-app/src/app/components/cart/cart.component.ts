@@ -15,12 +15,12 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.getProducts();
+    this.getProductsInCart();
   }
 
-  private getProducts(): void {
+  private getProductsInCart(): void {
     this.cartService
-      .getProducts()
+      .getProductsInCart()
       .subscribe((response: PageResponse<Product>) => {
         this.products = response.data;
         this.pages = response.pages;
@@ -31,6 +31,6 @@ export class CartComponent implements OnInit {
   onDeleteProduct(productId: number): void {
     this.cartService
       .deleteProduct(productId)
-      .subscribe(() => this.getProducts());
+      .subscribe(() => this.getProductsInCart());
   }
 }
