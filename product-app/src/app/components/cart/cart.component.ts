@@ -8,6 +8,7 @@ import { CartService } from 'src/app/services/cart.service';
   templateUrl: './cart.component.html',
 })
 export class CartComponent implements OnInit {
+  showToast: boolean = false;
   products: Product[] = [];
   pages: number = 0;
   total: number = 0;
@@ -28,9 +29,20 @@ export class CartComponent implements OnInit {
       });
   }
 
+  removeProductsInCart(productId: number) {
+    this.products = this.products
+      .slice()
+      .filter((product) => product.id !== productId);
+  }
+
   onDeleteProduct(productId: number): void {
-    this.cartService
-      .deleteProduct(productId)
-      .subscribe(() => this.getProductsInCart());
+    this.cartService.deleteProduct(productId).subscribe(() => {
+      this.removeProductsInCart(productId);
+      this.openToast();
+    });
+  }
+
+  openToast(): void{
+    this.showToast = true;
   }
 }

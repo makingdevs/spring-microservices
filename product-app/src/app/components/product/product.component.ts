@@ -12,6 +12,7 @@ export class ProductComponent implements OnInit {
   products: Product[] = [];
   productsInCart: Product[] = [];
   totalProductsInCart: number = 0;
+  showToast: boolean = false;
 
   constructor(
     private productService: ProductService,
@@ -39,6 +40,12 @@ export class ProductComponent implements OnInit {
   }
 
   onAddProduct(productId: number): void {
-    this.productService.addProductToCart(productId).subscribe();
+    this.productService.addProductToCart(productId).subscribe(() => {
+      this.openToast();
+    });
+  }
+
+  openToast(): void{
+    this.showToast = true;
   }
 }

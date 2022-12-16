@@ -1,4 +1,4 @@
-<div class="container mx-auto py-5">
+<div class="container mx-auto py-5" ng-cloak>
   <div class="grid place-content-center">
     <div *ngIf="products.length === 0" class="rounded-lg shadow-lg bg-white max-w-sm text-center">
       <div class="p-6">
@@ -36,3 +36,4 @@
       </div>
     </div>
   </div>
+  <toast-component message="Product removed correctly" [isOpen]="showToast"></toast-component>
