@@ -1,8 +1,9 @@
 version: "3.9"
 services:
   rabbitmq:
+    container_name: rabbitmq
     image: rabbitmq:3-management
-    restart: unless-stopped
+    restart: always
     ports:
       - 5672:5672
       - 15672:15672
@@ -14,7 +15,7 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
     healthcheck:
-      test: curl --fail http://localhost:15672 || exit 1
+      test: curl --fail http://rabbitmq:15672 || exit 1
       interval: 30s
       timeout: 1m
       retries: 2
@@ -22,7 +23,7 @@ services:
   mysql:
     container_name: mysqldb
     image: mysql/mysql-server:8.0.23
-    restart: unless-stopped
+    restart: always
     environment:
       MYSQL_DATABASE: cart_service
       MYSQL_USER: root
@@ -39,7 +40,7 @@ services:
   postgres:
     image: postgres
     container_name: postgresdb
-    restart: unless-stopped
+    restart: always
     environment:
       POSTGRES_DB: product_service
       POSTGRES_USER: postgres
@@ -54,7 +55,7 @@ services:
       - spring-microservices-network
   eureka-server:
     container_name: eureka-server
-    restart: on-failure
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -74,7 +75,7 @@ services:
       start_period: 1m
   api-gateway:
     container_name: api-gateway
-    restart: on-failure
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -91,7 +92,7 @@ services:
         condition: service_started
   cart-service:
     container_name: cart-service
-    restart: on-failure
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -114,7 +115,7 @@ services:
         condition: service_started
   product-service:
     container_name: product-service
-    restart: on-failure
+    restart: always
     build:
       context: .
       dockerfile: Dockerfile
@@ -134,6 +135,25 @@ services:
       eureka-server:
         condition: service_started
       api-gateway:
+        condition: service_started
+  product-app:
+    container_name: product-app
+    restart: always
+    build:
+      context: .
+      dockerfile: ./product-app/Dockerfile
+      args:
+        - PATH_FOLDER=./product-app
+    ports:
+      - 4200:4200
+    expose:
+      - 4200
+    networks:
+      - spring-microservices-network
+    depends_on:
+      product-service:
+        condition: service_started
+      cart-service:
         condition: service_started
 volumes:
   mysql-data:
