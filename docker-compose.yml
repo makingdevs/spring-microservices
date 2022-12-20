@@ -1,0 +1,143 @@
+version: "3.9"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: unless-stopped
+    ports:
+      - 5672:5672
+      - 15672:15672
+    expose:
+      - 15672
+    networks:
+      - spring-microservices-network
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: curl --fail http://localhost:15672 || exit 1
+      interval: 30s
+      timeout: 1m
+      retries: 2
+      start_period: 1m
+  mysql:
+    container_name: mysqldb
+    image: mysql/mysql-server:8.0.23
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cart_service
+      MYSQL_USER: root
+      MYSQL_PASSWORD: pass
+      MYSQL_ROOT_PASSWORD: pass
+    volumes:
+      - ./mysql-data/8.0.23:/var/lib/mysql
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    networks:
+      - spring-microservices-network
+  postgres:
+    image: postgres
+    container_name: postgresdb
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: product_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./postgresql-data:/var/lib/postgresql
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+    networks:
+      - spring-microservices-network
+  eureka-server:
+    container_name: eureka-server
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PATH_FOLDER=./eureka-server
+    ports:
+      - 9000:9000
+    expose:
+      - 9000
+    networks:
+      - spring-microservices-network
+    healthcheck:
+      test: curl --fail http://eureka-server:9000 || exit 1
+      interval: 30s
+      timeout: 1m
+      retries: 2
+      start_period: 1m
+  api-gateway:
+    container_name: api-gateway
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PATH_FOLDER=./api-gateway
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    networks:
+      - spring-microservices-network
+    depends_on:
+      eureka-server:
+        condition: service_started
+  cart-service:
+    container_name: cart-service
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PATH_FOLDER=./cart-service
+    ports:
+      - 8050:8050
+    expose:
+      - 8050
+    networks:
+      - spring-microservices-network
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      mysql:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
+  product-service:
+    container_name: product-service
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - PATH_FOLDER=./product-service
+    ports:
+      - 8085:8085
+    expose:
+      - 8085
+    networks:
+      - spring-microservices-network
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
+volumes:
+  mysql-data:
+  postgresql-data:
+networks:
+  spring-microservices-network:
+    name: spring-microservices-network
