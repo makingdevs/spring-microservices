@@ -10,7 +10,7 @@ export class CartService {
 
   constructor(private http: HttpClient) {}
 
-  getProducts(page?: number, size?: number): Observable<PageResponse<Product>> {
+  getProductsInCart(page?: number, size?: number): Observable<PageResponse<Product>> {
     let url = this.url;
     if (page && size) {
       url += `?page=${page}&size=${size}`;

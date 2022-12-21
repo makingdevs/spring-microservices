@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PageResponse } from 'src/app/models/page-response';
 import { Product } from 'src/app/models/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -8,11 +10,18 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductComponent implements OnInit {
   products: Product[] = [];
+  productsInCart: Product[] = [];
+  totalProductsInCart: number = 0;
+  showToast: boolean = false;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.getProducts();
+    this.getProductsInCart();
   }
 
   private getProducts(): void {
@@ -21,7 +30,22 @@ export class ProductComponent implements OnInit {
       .subscribe((products: Product[]) => (this.products = products));
   }
 
+  private getProductsInCart(): void {
+    this.cartService
+      .getProductsInCart()
+      .subscribe((response: PageResponse<Product>) => {
+        this.productsInCart = response.data;
+        this.totalProductsInCart = response.total;
+      });
+  }
+
   onAddProduct(productId: number): void {
-    this.productService.addProductToCart(productId).subscribe();
+    this.productService.addProductToCart(productId).subscribe(() => {
+      this.openToast();
+    });
+  }
+
+  openToast(): void{
+    this.showToast = true;
   }
 }
