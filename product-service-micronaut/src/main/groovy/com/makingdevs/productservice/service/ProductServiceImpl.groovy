@@ -14,10 +14,14 @@ class ProductServiceImp implements ProductService{
   @Inject
   ProductRepository productRepository
 
+  @Override
   Product sendToCart(Long productId) {
-    Product product = productRepository.findById(productId).get()
-    productProducerService.send(product)
-    product
+    Optional<Product> product = productRepository.findById(productId)
+
+    if(product.isPresent()){
+      productProducerService.send(product.get())
+      product.get()
+    }
   }
 
 }
