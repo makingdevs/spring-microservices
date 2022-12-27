@@ -56,6 +56,8 @@ services:
   eureka-server:
     container_name: eureka-server
     restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
     build:
       context: .
       dockerfile: Dockerfile
@@ -76,6 +78,8 @@ services:
   api-gateway:
     container_name: api-gateway
     restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
     build:
       context: .
       dockerfile: Dockerfile
@@ -93,6 +97,8 @@ services:
   cart-service:
     container_name: cart-service
     restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
     build:
       context: .
       dockerfile: Dockerfile
@@ -116,6 +122,8 @@ services:
   product-service:
     container_name: product-service
     restart: always
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
     build:
       context: .
       dockerfile: Dockerfile
