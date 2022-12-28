@@ -136,6 +136,29 @@ services:
         condition: service_started
       api-gateway:
         condition: service_started
+  product-service-micronaut:
+    container_name: product-service-micronaut
+    restart: always
+    build:
+      context: .
+      dockerfile: DockerfileProduct
+      args:
+        - PATH_FOLDER=./product-service-micronaut
+    ports:
+      - 8086:8086
+    expose:
+      - 8086
+    networks:
+      - spring-microservices-network
+    depends_on:
+      rabbitmq:
+        condition: service_started
+      postgres:
+        condition: service_started
+      eureka-server:
+        condition: service_started
+      api-gateway:
+        condition: service_started
   product-app:
     container_name: product-app
     restart: always
