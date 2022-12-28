@@ -8,4 +8,10 @@ COPY $PATH_FOLDER ./
 
 RUN npm install
 
-RUN npm run build --prod
+RUN npm run prod-build
+
+FROM nginx:alpine AS app
+
+COPY --from=build /app/nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=build /app/dist/web-app /usr/share/nginx/html

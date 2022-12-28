@@ -14,6 +14,7 @@ public class Product {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id
   String name
+  String imageUrl
   Double price
 
 }

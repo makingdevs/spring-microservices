@@ -7,7 +7,7 @@ spring:
     hibernate:
       ddl-auto: create-drop
   datasource:
-    url: jdbc:mysql://localhost:3306/cart_service
+    url: jdbc:mysql://mysqldb:3306/cart_service
     username: root
     password: pass
   rabbitmq:
@@ -23,4 +23,4 @@ eureka:
   client:
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:9000/eureka
+      defaultZone: http://eureka-server:9000/eureka
