@@ -6,9 +6,9 @@ micronaut:
 
 datasources:
   default:
-    url: jdbc:postgresql://localhost:5432/product_service_dev
+    url: jdbc:postgresql://postgresdb:5432/product_service
     username: postgres
-    password: ""
+    password: postgres
     driverClassName: org.postgresql.Driver
     dialect: org.hibernate.dialect.PostgreSQLDialect
 
@@ -20,7 +20,7 @@ jpa:
           auto: create-drop
 
 rabbitmq:
-  uri: amqp://guest:guest@localhost:5672
+  uri: amqp://guest:guest@rabbitmq:5672
 
 netty:
   default:
@@ -30,4 +30,4 @@ eureka:
   client:
     registration:
       enabled: true
-    defaultZone: ${EUREKA_HOST:localhost}:${EUREKA_PORT:9000}
+    defaultZone: ${EUREKA_HOST:eureka-server}:${EUREKA_PORT:9000}
