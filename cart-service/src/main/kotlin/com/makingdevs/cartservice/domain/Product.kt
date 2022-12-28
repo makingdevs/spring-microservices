@@ -13,6 +13,8 @@ class Product(
   var id: Long,
   @Column(name = "name")
   var name: String,
+  @Column(name = "image_url")
+  var imageUrl: String,
   @Column(name = "price")
   var price: Double
 
