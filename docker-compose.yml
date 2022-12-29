@@ -147,6 +147,8 @@ services:
   product-service-micronaut:
     container_name: product-service-micronaut
     restart: always
+    environment:
+      MICRONAUT_ENVIRONMENTS: dev
     build:
       context: .
       dockerfile: DockerfileProduct
