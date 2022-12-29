@@ -14,6 +14,7 @@ class Product {
   @Id
   Long id
   String name
+  String imageUrl
   Double price
 
 }
