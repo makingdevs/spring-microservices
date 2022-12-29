@@ -1,0 +1,33 @@
+micronaut:
+  application:
+    name: productService2
+  server:
+    port: 8086
+
+datasources:
+  default:
+    url: jdbc:postgresql://postgresdb:5432/product_service
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: create-drop
+
+rabbitmq:
+  uri: amqp://guest:guest@rabbitmq:5672
+
+netty:
+  default:
+    allocator:
+      max-order: 3
+eureka:
+  client:
+    registration:
+      enabled: true
+    defaultZone: ${EUREKA_HOST:eureka-server}:${EUREKA_PORT:9000}
